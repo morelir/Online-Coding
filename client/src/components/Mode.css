@@ -1,0 +1,61 @@
+.mode-pick {
+  /* height: 85vh; */
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 15px;
+}
+
+.mode-pick .title {
+  font-size: 30px;
+}
+
+.mode-pick .info {
+  text-align: center;
+  color: #868e96;
+  font-size: 24px;
+  line-height: 1.5;
+}
+
+.mode-pick .level-buttons {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.mode-pick .level-buttons button {
+  padding: 0.5rem 1rem;
+}
+
+.easy {
+  background-color: #64dd17;
+}
+.easy:hover,
+.easy:active {
+  background-color: #64dd17;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.medium {
+  background-color: #2196f3;
+}
+.medium:hover,
+.medium:active {
+  background-color: #2195f3;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.hard {
+  background-color: #d32f2f;
+}
+.hard:hover,
+.hard:active {
+  background-color: #d32f2f;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
