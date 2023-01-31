@@ -9,7 +9,7 @@ if (hour < 18) {
     greeting = "Good evening";
 }`,
     solution: 
-`const hour = 14;
+`const hour = 50;
 if (hour < 18) {
     greeting = "Good day";
 } else {
@@ -26,7 +26,7 @@ for (let i = 0; i < 9; i++) {
 }`,
     solution: 
 `let str = '';
-for (let i = 0; i < 9; i++) {
+for (let i = 0; i < 15; i++) {
   str = str + i;
 }`,
   },
@@ -43,13 +43,11 @@ console.log(calcRectArea(5, 6));`,
   return width * height;
 }
 
-console.log(calcRectArea(5, 6));`,
+console.log(calcRectArea(10, 7));`,
   },
   "async":{
     title:'async',
     defaultCode: 
-``,
-    solution: 
 `function resolveAfter2Seconds() {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -61,6 +59,24 @@ console.log(calcRectArea(5, 6));`,
 async function asyncCall() {
   console.log('calling');
   const result = await resolveAfter2Seconds();
+  console.log(result);
+  // Expected output: "resolved"
+}
+
+asyncCall();
+`,
+    solution: 
+`function resolveAfter5Seconds() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve('resolved');
+    }, 5000);
+  });
+}
+
+async function asyncCall() {
+  console.log('calling');
+  const result = await resolveAfter5Seconds();
   console.log(result);
   // Expected output: "resolved"
 }
