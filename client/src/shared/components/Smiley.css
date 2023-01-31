@@ -1,0 +1,12 @@
+.smile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 150px;
+}
+@media (max-width: 450px) {
+  .smile {
+    font-size: 90px;
+
+  }
+}

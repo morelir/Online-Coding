@@ -2,64 +2,39 @@ import React, { useState, useEffect } from "react";
 import { socket } from "../socket/Socket";
 
 const UserContext = React.createContext({
-  fullName: "",
-  setFullName: (text) => {},
-  nickName: "",
-  setNickName: (text) => {},
   role: "",
-  words: [],
-  setWords: ([]) => {},
-  word: [],
-  setWord: ([]) => {},
-  mode: "",
-  setMode: (text) => {},
-  modePicked: false,
-  setModePicked: (boolean) => {},
-  gameStatus: false,
-  score: 0,
-  setScore: (number) => {},
+  setRole: (text) => {},
+  codeBlock: "",
+  setCodeBlock: (text) => {},
+  currentCode: null,
+  setCurrentCode: ({}) => {},
 });
 
 export const UserContextProvider = (props) => {
-  const [fullName, setFullName] = useState("");
-  const [nickName, setNickName] = useState("");
-  const [role, setRole] = useState("");
-  const [words, setWords] = useState([]);
-  const [word, setWord] = useState([]);
-  const [mode, setMode] = useState("");
-  const [modePicked, setModePicked] = useState(false);
-  const [gameStatus, setGameStatus] = useState(false);
-  const [score, setScore] = useState(0);
+  const [role, setRole] = useState("");//client type: mentor or student
+  const [codeBlock, setCodeBlock] = useState(""); // type of the code block (e.g., if-else, for)
+  const [currentCode, setCurrentCode] = useState(null);// type of the code block (e.g., if-else, for)
 
   useEffect(() => {
     socket.on("role", (data) => {
       setRole(data.role);
     });
-    socket.on("game full", () => {
-      setGameStatus(true);
+    socket.on("block-picked", (block) => {
+      setCodeBlock(block);
     });
-    socket.on("mode picked", () => {
-      setModePicked(true);
+    socket.on("coding", (code) => {
+      setCurrentCode(code);
     });
+
   }, []);
 
   const contextValue = {
-    fullName,
-    setFullName,
-    nickName,
-    setNickName,
     role,
-    words,
-    setWords,
-    word,
-    setWord,
-    mode,
-    setMode,
-    modePicked,
-    setModePicked,
-    gameStatus,
-    score,
-    setScore,
+    setRole,
+    codeBlock,
+    setCodeBlock,
+    currentCode,
+    setCurrentCode,
   };
 
   return (

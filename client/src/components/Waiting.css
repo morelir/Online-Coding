@@ -1,16 +1,10 @@
-.main-content {
-  color: #333;
-}
-
-.main-content .waiting {
+.waiting {
   height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-}
 
-.main-content .waiting p {
   font-size: 62px;
   text-align: center;
   font-weight: 300;

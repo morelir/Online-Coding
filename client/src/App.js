@@ -4,26 +4,48 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { socket } from "./socket/Socket";
 import "./App.css";
 import Lobby from "./components/Lobby";
 import Header from "./components/Header";
-import Main from "./components/Main";
-import Mode from "./components/Mode";
-import WordPick from "./components/WordPick";
 import CodeBlock from "./components/CodeBlock";
+import { useContext } from "react";
+import UserContext from "./store/user-context";
+import Waiting from "./components/Waiting";
+import LoadingSpinner from "./shared/components/LoadingSpinner";
 
 function App() {
+  const { role } = useContext(UserContext);
+
+  let routes;
+  if (role === "student") {
+    routes = (
+      <Routes>
+        <Route path="/waiting" element={<Waiting />} />
+        <Route path="/code-block/:block" element={<CodeBlock />} />
+        <Route path="*" element={<Navigate to="/waiting" replace />} />
+      </Routes>
+    );
+  } else if (role === "mentor") {
+    routes = (
+      <Routes>
+        <Route path="/lobby" element={<Lobby />} />
+        <Route path="/code-block/:block" element={<CodeBlock />} />
+        <Route path="*" element={<Navigate to="/lobby" replace />} />
+      </Routes>
+    );
+  } else {
+    routes = (
+      <Routes>
+        <Route path="*" element={<LoadingSpinner asOverlay />} />
+      </Routes>
+    );
+  }
+
   return (
     <Router>
       <Header />
       <main>
-        <Routes>
-          <Route path="/lobby" element={<Lobby />} />
-          {/* <Route path="/choose-word" element={() => <WordChoose />} /> */}
-          <Route path="/code-block/:block" element={<CodeBlock/>} /> 
-          <Route path="*" element={<Navigate to="/lobby" replace />} />
-        </Routes>
+        {routes}
       </main>
     </Router>
   );

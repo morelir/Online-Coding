@@ -1,5 +1,4 @@
 const router = require('express').Router();
-// const randomWords = require('random-words');
 const {templeteBlocks} = require('../data')
 
 router.get('/:blockType', async (req, res) => {

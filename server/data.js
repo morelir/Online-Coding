@@ -1,5 +1,6 @@
 const templeteData = {
   "if-else": {
+    title:'if...else',
     defaultCode: 
 `const hour = 14;
 if (hour < 18) {
@@ -13,10 +14,11 @@ if (hour < 18) {
     greeting = "Good day";
 } else {
     greeting = "Good evening";
-}for()`,
+}`,
   },
 
   "for":{
+    title:'for',
     defaultCode: 
 `let str = '';
 for (let i = 0; i < 9; i++) {
@@ -28,5 +30,43 @@ for (let i = 0; i < 9; i++) {
   str = str + i;
 }`,
   },
+  "function":{
+    title:'function',
+    defaultCode: 
+`function calcRectArea(width, height) {
+  return width * height;
+}
+
+console.log(calcRectArea(5, 6));`,
+    solution: 
+`function calcRectArea(width, height) {
+  return width * height;
+}
+
+console.log(calcRectArea(5, 6));`,
+  },
+  "async":{
+    title:'async',
+    defaultCode: 
+``,
+    solution: 
+`function resolveAfter2Seconds() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve('resolved');
+    }, 2000);
+  });
+}
+
+async function asyncCall() {
+  console.log('calling');
+  const result = await resolveAfter2Seconds();
+  console.log(result);
+  // Expected output: "resolved"
+}
+
+asyncCall();
+`,
+  }
 };
 exports.templeteBlocks = templeteData;

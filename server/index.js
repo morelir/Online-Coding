@@ -9,29 +9,34 @@ app.use(express.json());
 app.use(cors());
 app.use("/code-block", require("./routes/codeBlock"));
 
-let activePlayers = 0;
-let roleCounter = true;
+let roleCounter = 0;
+let blockPicked = "";
+let registeredCode = null;
 
 io.on("connection", (socket) => {
-  roleCounter = !roleCounter;
-  socket.emit("role", { role: roleCounter ? "draw" : "guess" });
-  console.log(socket.id);
-  console.log(roleCounter ? "draw" : "guess");
+  roleCounter++;
+  socket.emit("role", { role: roleCounter === 1 ? "mentor" : "student" });
+  if (blockPicked) io.to(socket.id).emit("block-picked", blockPicked); //if block already picked, send it to client.
+  if (registeredCode) io.to(socket.id).emit("coding", registeredCode); //if code already registered, send it to client.
 
-  socket.on("signed", () => {
-    activePlayers++;
-    console.log("active players:", activePlayers);
-    if (activePlayers === 2) {
-      io.sockets.emit("game full");
-    }
-  });
-
-  socket.on("mode picked", () => {
-    socket.broadcast.emit("mode picked");
+  socket.on("block-picked", (block) => {
+    blockPicked = block;
+    socket.broadcast.emit("block-picked", block);
   });
 
   socket.on("disconnect", () => {
-    console.log("User Disconnected", socket.id);
+    roleCounter--;
+  });
+
+  // -------------- Coding Events ----------------
+  socket.on("coding", (code) => {
+    registeredCode = code;
+    socket.broadcast.emit("coding", code);
+  });
+
+  socket.on("clear", () => {
+    registeredCode = null;
+    socket.emit("coding", null);
   });
 });
 

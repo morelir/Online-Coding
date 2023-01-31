@@ -15,7 +15,6 @@
 
 .lobby .links-group {
   display: grid;
-  width: 500px;
   /* grid-template-columns: repeat(auto-fit, minmax(1fr, 1fr)); */
   grid-template-columns: 1fr 1fr;
   row-gap: 8px;

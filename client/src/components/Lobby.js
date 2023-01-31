@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../store/user-context";
 import { socket } from "../socket/Socket";
@@ -6,32 +6,27 @@ import "./Lobby.css";
 import Button from "../shared/components/Button";
 
 const Lobby = () => {
-  const navigate = useNavigate();
-  const { setFullName, setNickName, role } = useContext(UserContext);
-  const [nick, setNick] = useState("");
-  const [name, setName] = useState("");
-  const handleClick = () => {
-    setNickName(nick);
-    setFullName(name);
-    socket.emit("signed");
-    console.log("asdasd");
-    if (role === "draw") {
-      navigate("/mode", { replace: true });
-    } else {
-      navigate("/main", { replace: true });
-    }
+  const {setCodeBlock } = useContext(UserContext);
+
+  const handleClick = (e) => {
+    socket.emit('block-picked', e.currentTarget.id);
+    setCodeBlock(e.currentTarget.id)
   };
+
+  useEffect(()=>{
+    socket.emit('block-picked', '');
+    setCodeBlock('')
+  },[])
+
   return (
     <div className="lobby">
       <h1>Choose code block</h1>
       <div className="links-group">
-        <Link to="/code-block/if-else">if else</Link>
-        <Link to="/code-block/for">for</Link>
-        <Link to="/code-block/async">async</Link>
-        <Link to="/code-block/function">function</Link>
+        <Link to="/code-block/if-else" id="if-else" onClick={handleClick}>if else</Link>
+        <Link to="/code-block/for" id="for" onClick={handleClick} >for</Link>
+        <Link to="/code-block/async" id="async"  onClick={handleClick}>async</Link>
+        <Link to="/code-block/function" id="function" onClick={handleClick}>function</Link>
       </div>
-
-      {/* <Button disabled={!(nick && name)}>Lets Play!</Button> */}
     </div>
   );
 };
