@@ -1,3 +1,4 @@
+import React,{ Suspense, useContext } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,10 +9,10 @@ import "./App.css";
 import Lobby from "./components/Lobby";
 import Header from "./components/Header";
 import CodeBlock from "./components/CodeBlock";
-import { useContext } from "react";
 import UserContext from "./store/user-context";
 import Waiting from "./components/Waiting";
 import LoadingSpinner from "./shared/components/LoadingSpinner";
+
 
 function App() {
   const { role } = useContext(UserContext);
@@ -45,7 +46,15 @@ function App() {
     <Router>
       <Header />
       <main>
-        {routes}
+        <Suspense
+          fallback={
+            <div className="center">
+              <LoadingSpinner asOverlay/>
+            </div>
+          }
+        >
+          {routes}
+        </Suspense>
       </main>
     </Router>
   );

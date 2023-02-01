@@ -3,6 +3,10 @@ const app = express();
 const server = require("http").createServer(app);
 const cors = require("cors");
 
+const PORT = process.env.PORT || 4000;
+
+server.listen(PORT, () => console.log("Server Running on port ", PORT));
+
 const io = require("socket.io")(server, { cors: { origin: "*" } });
 
 app.use(express.json());
@@ -39,7 +43,3 @@ io.on("connection", (socket) => {
     socket.emit("coding", null);
   });
 });
-
-const PORT = process.env.PORT || 4000;
-
-server.listen(PORT, () => console.log("Server Running on port ", PORT));
